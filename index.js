@@ -79,7 +79,7 @@ if (re.test(fromdate, todate) !== true) {
       await json(processArray)
     }
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(JSON.stringify(error))
   }
 })()
 
@@ -108,7 +108,7 @@ function averageList(list) {
 
 // Concatenates a list of lists into one shallow list.
 function concatenateLists(lists) {
-  return lists.reduce((list1, list2) => list1.concat(list2))
+  return lists.reduce((list1, list2) => list1.concat(list2), [])
 }
 
 // Calculates the union of a group of Sets.
@@ -126,7 +126,7 @@ function unionSets(...iterables) {
 
 // Calculates the number of items in the union of a list of sets.
 function unionSetSize(sets) {
-  return sets.reduce((set1, set2) => unionSets(set1, set2)).size
+  return sets.reduce((set1, set2) => unionSets(set1, set2), new Set()).size
 }
 
 // Calculates the total star count for a repository.
@@ -213,7 +213,7 @@ async function getRepos(repoArray) {
       }
     } while (hasNextPageMember)
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(JSON.stringify(error))
   }
 }
 
@@ -391,7 +391,7 @@ async function queryGitHub(repoArray, queryArray) {
       console.log(`${dataJSON.repository.name} (Rate limit: ${dataJSON.rateLimit.remaining})`)
     }
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(JSON.stringify(error))
   }
 }
 
@@ -541,7 +541,7 @@ async function queryIssuesDeep(repoName, cursor, issues) {
     }
     return issues
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(JSON.stringify(error))
   }
 }
 
@@ -600,7 +600,7 @@ async function queryPullRequestsDeep(repoName, cursor, pullRequests) {
     }
     return pullRequests
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(JSON.stringify(error))
   }
 }
 
@@ -1094,7 +1094,7 @@ async function pushCSV(data) {
       ...reportPath
     })
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(JSON.stringify(error))
   }
 }
 
@@ -1140,6 +1140,6 @@ async function json(data) {
       ...reportPath
     })
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(JSON.stringify(error))
   }
 }
